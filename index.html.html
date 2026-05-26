@@ -1,0 +1,1862 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ОКРУГ // ТАКТИЧЕСКИЙ ТЕРМИНАЛ ОКО-04</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&family=Share+Tech+Mono&display=swap');
+    
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background-color: #030712;
+      color: #e5e7eb;
+    }
+    
+    .tech-header {
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b0f19;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1e293b;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #3b82f6;
+    }
+
+    /* Glow utilities */
+    .glow-border-cyan {
+      box-shadow: 0 0 10px rgba(6, 182, 212, 0.15);
+    }
+    .glow-border-emerald {
+      box-shadow: 0 0 10px rgba(16, 185, 129, 0.15);
+    }
+    .glow-border-red {
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.15);
+    }
+    .glow-text-cyan {
+      text-shadow: 0 0 8px rgba(6, 182, 212, 0.5);
+    }
+  </style>
+</head>
+<body class="bg-[#030712] min-h-screen selection:bg-cyan-500 selection:text-black">
+
+  <!-- TOP DECORATIVE STATUS BAR -->
+  <div class="border-b border-slate-800 bg-[#070a13] text-[10px] py-1.5 px-4 flex justify-between items-center text-slate-400">
+    <div class="flex items-center gap-4">
+      <span class="flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-cyan-500 animate-pulse"></span> ТЕРМИНАЛ: ОКО-04.3 // АКТИВЕН</span>
+      <span class="hidden md:inline">РЕЖИМ: СЕКРЕТНО. ДОПУСК КГД-IV</span>
+    </div>
+    <div class="flex items-center gap-6">
+      <span class="hidden lg:inline">СЕТЕВОЙ НАДЗОР: СИСТЕМА СТАБИЛЬНА</span>
+      <span id="current-time">TIMESTAMP: --:--:--</span>
+    </div>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 py-6 md:py-10 space-y-10">
+
+    <!-- HERO HEADER -->
+    <header class="border border-slate-800 bg-[#070d19]/80 p-6 rounded-lg relative overflow-hidden">
+      <!-- Cybergrid background overlay -->
+      <div class="absolute inset-0 opacity-5 pointer-events-none" style="background-image: linear-gradient(#06b6d4 1px, transparent 1px), linear-gradient(90deg, #06b6d4 1px, transparent 1px); background-size: 20px 20px;"></div>
+      
+      <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+        <div>
+          <div class="text-xs text-cyan-400 font-bold tracking-widest uppercase mb-1">ДИРЕКТИВА КОМАНДОВАНИЯ ОКО-04</div>
+          <h1 class="text-2xl md:text-4xl font-bold tracking-tight tech-header text-white flex items-center gap-3">
+            ОКРУГ <span class="text-slate-500">//</span> ВОЕННО-ТЕХНИЧЕСКИЙ РЕГЛАМЕНТ
+          </h1>
+          <p class="text-xs md:text-sm text-slate-400 mt-2 max-w-3xl leading-relaxed">
+            Настоящий документ является единственным официальным регламентом по эксплуатации аппаратных комплексов и ведению тактических операций в сетевой инфраструктуре Округа. Отклонения классифицируются как саботаж с аннулированием статуса оперативника.
+          </p>
+        </div>
+        <div class="flex flex-col gap-2 shrink-0 bg-slate-900/60 p-3 rounded border border-slate-800 text-xs">
+          <div class="flex justify-between gap-6"><span class="text-slate-500">РЕДАКЦИЯ:</span> <span class="text-slate-300">ОКО-04.3 / 2026</span></div>
+          <div class="flex justify-between gap-6"><span class="text-slate-500">СТАТУС:</span> <span class="text-emerald-400">СЕРТИФИЦИРОВАНО</span></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- SECTION 1: SYSTEM RECOVERY & GENERAL ACCORDION (ТАK ARCHITECTURE) -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-2 border-l-2 border-cyan-500 pl-3">
+        <h2 class="text-lg font-bold tracking-wider text-slate-200 uppercase tech-header">ЧАСТЬ I. ТАКТИЧЕСКИЙ АППАРАТНЫЙ КОМПЛЕКС (ТАК)</h2>
+      </div>
+
+      <div class="border border-slate-800 bg-[#070b14] rounded-lg overflow-hidden">
+        <!-- Accordion Toggle Header -->
+        <button id="toggle-tac-btn" class="w-full text-left p-4 hover:bg-slate-900/40 flex justify-between items-center transition-all">
+          <div class="flex items-center gap-3">
+            <i data-lucide="cpu" class="w-5 h-5 text-cyan-400"></i>
+            <div>
+              <span class="font-bold text-sm tracking-wide text-white">АРХИТЕКТУРА И УЗЛЫ СИНХРОНИЗАЦИИ</span>
+              <p class="text-[11px] text-slate-500 mt-0.5">Взаимодействие четырех ключевых аппаратных блоков обеспечения автономности</p>
+            </div>
+          </div>
+          <i data-lucide="chevron-down" id="toggle-tac-icon" class="w-5 h-5 text-slate-400 transition-transform duration-200"></i>
+        </button>
+
+        <!-- Accordion Body Content -->
+        <div id="tac-content" class="border-t border-slate-850 p-6 space-y-6 hidden bg-[#05080f]/90">
+          <p class="text-xs text-slate-400 leading-relaxed max-w-4xl">
+            Боеспособность оперативника обеспечивается непрерывной синхронизацией четырех аппаратных узлов. Сбой или принудительное отключение любого из узлов ведет к мгновенной дестабилизации всей системы и аварийному отключению ТАК.
+          </p>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Node 1 -->
+            <div class="border border-slate-800 bg-[#0a0f1d] p-4 rounded-lg flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-3">
+                  <span class="text-xs font-bold text-slate-500">УЗЕЛ 01 / ОС</span>
+                  <span class="px-1.5 py-0.5 text-[9px] font-bold bg-cyan-950 text-cyan-400 rounded">ЦУП</span>
+                </div>
+                <h4 class="text-xs font-bold text-white mb-2 uppercase">Вычислительный шлем</h4>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                  Обработка данных, баллистический расчет, AR-интерфейс, шифрование каналов и софт дешифровки. Повреждение шлема ведет к потере контроля над приводами.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-850/60 flex items-center justify-between text-[10px]">
+                <span class="text-slate-500">Система управления</span>
+                <span class="text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online</span>
+              </div>
+            </div>
+
+            <!-- Node 2 -->
+            <div class="border border-slate-800 bg-[#0a0f1d] p-4 rounded-lg flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-3">
+                  <span class="text-xs font-bold text-slate-500">УЗЕЛ 02 / СЕРВО</span>
+                  <span class="px-1.5 py-0.5 text-[9px] font-bold bg-cyan-950 text-cyan-400 rounded">КОРПУС</span>
+                </div>
+                <h4 class="text-xs font-bold text-white mb-2 uppercase">Опорный экзокаркас</h4>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                  Несущая платформа компенсации нагрузок. Снижает воздействие на опорно-двигательный аппарат, стабилизирует отдачу при стрельбе и амортизирует падения.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-850/60 flex items-center justify-between text-[10px]">
+                <span class="text-slate-500">Амортизация приводов</span>
+                <span class="text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Норма</span>
+              </div>
+            </div>
+
+            <!-- Node 3 -->
+            <div class="border border-slate-800 bg-[#0a0f1d] p-4 rounded-lg flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-3">
+                  <span class="text-xs font-bold text-slate-500">УЗЕЛ 03 / МОДУЛИ</span>
+                  <span class="px-1.5 py-0.5 text-[9px] font-bold bg-cyan-950 text-cyan-400 rounded">АКТИВНЫЙ</span>
+                </div>
+                <h4 class="text-xs font-bold text-white mb-2 uppercase">Профильные модули</h4>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                  Специализированный инструментарий (автономные дроны, турели, хирургические блоки, оптическая маскировка), определяющий категорию и квалификацию оперативника.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-850/60 flex items-center justify-between text-[10px]">
+                <span class="text-slate-500">Готовность систем</span>
+                <span class="text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Готов</span>
+              </div>
+            </div>
+
+            <!-- Node 4 -->
+            <div class="border border-slate-800 bg-[#0a0f1d] p-4 rounded-lg flex flex-col justify-between">
+              <div>
+                <div class="flex justify-between items-start mb-3">
+                  <span class="text-xs font-bold text-slate-500">УЗЕЛ 04 / РЕСУРСЫ</span>
+                  <span class="px-1.5 py-0.5 text-[9px] font-bold bg-cyan-950 text-cyan-400 rounded">АВТОНОМ</span>
+                </div>
+                <h4 class="text-xs font-bold text-white mb-2 uppercase">Ресурсный блок</h4>
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                  Контейнер для сменных расходников. Прекращение подачи энергии или медикаментов переводит ТАК в пассивный режим, полностью блокируя сервомоторы.
+                </p>
+              </div>
+              <div class="mt-4 pt-3 border-t border-slate-850/60 flex items-center justify-between text-[10px]">
+                <span class="text-slate-500">Уровень резервуаров</span>
+                <span class="text-cyan-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse"></span> 100%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- UNIVERSAL RESOURCES SECTION -->
+          <div class="border-t border-slate-800 pt-6">
+            <h5 class="text-xs font-bold text-slate-300 tracking-wider uppercase mb-3 flex items-center gap-2">
+              <i data-lucide="package" class="w-4 h-4 text-cyan-400"></i> РЕЕСТР УНИФИЦИРОВАННЫХ РАСХОДНЫХ МАТЕРИАЛОВ
+            </h5>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-xs">
+              <div class="p-3 bg-slate-900/40 rounded border border-slate-850">
+                <strong class="text-cyan-400 block mb-1">1. УЭБ (Энерго-Блок)</strong>
+                <p class="text-slate-400 text-[11px]">Элемент питания простейших AR-систем, квантовых генераторов полей и нейронных интерфейсов.</p>
+              </div>
+              <div class="p-3 bg-slate-900/40 rounded border border-slate-850">
+                <strong class="text-emerald-400 block mb-1">2. МТК (Медико-Терапевтический)</strong>
+                <p class="text-slate-400 text-[11px]">Капсула для остановки кровотечений локально либо активации нано-ботов для полостной регенерации.</p>
+              </div>
+              <div class="p-3 bg-slate-900/40 rounded border border-slate-850">
+                <strong class="text-amber-500 block mb-1">3. ИРК (Инженерно-Ремонтный)</strong>
+                <p class="text-slate-400 text-[11px]">Набор для восстановления бронеплит экзоскелета, поврежденной проводки и сервиса боевых дронов.</p>
+              </div>
+              <div class="p-3 bg-slate-900/40 rounded border border-slate-850">
+                <strong class="text-red-400 block mb-1">4. РКМ (Реактивно-Кинетический)</strong>
+                <p class="text-slate-400 text-[11px]">Сжатое реактивное топливо, снайперские снаряды, умные ракеты или заряды пластичной взрывчатки C-4.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: DECRYPTION SIMULATORS (РОСК & ППКХ) -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-2 border-l-2 border-cyan-500 pl-3">
+        <h2 class="text-lg font-bold tracking-wider text-slate-200 uppercase tech-header">ЧАСТЬ II. СЕТЕВОЙ ДОСТУП И ИНТЕРАКТИВНЫЙ ВЗЛОМ</h2>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Decryption Choice / Terminal Interface -->
+        <div class="lg:col-span-4 space-y-3">
+          <div class="border border-slate-800 bg-[#070b14] p-4 rounded-lg space-y-4">
+            <div class="text-xs font-bold text-slate-500 tracking-widest uppercase flex items-center gap-2">
+              <i data-lucide="shield-alert" class="w-4 h-4 text-cyan-400 animate-pulse"></i> СЕЛЕКТОР ПРОТОКОЛА ВЗЛОМА
+            </div>
+            
+            <div class="space-y-2">
+              <!-- ROSK Buttons -->
+              <div class="text-[10px] text-slate-500 uppercase tracking-wider font-bold">РОСК (Обход статических контуров)</div>
+              
+              <button onclick="switchHackingProtocol('zarya')" id="btn-zarya" class="hack-tab-btn w-full text-left px-3 py-2.5 rounded text-xs border border-cyan-500/20 bg-cyan-950/20 hover:bg-cyan-950/40 text-cyan-400 font-bold flex justify-between items-center transition-all">
+                <span>ОС «ЗАРЯ» <span class="text-slate-500 font-normal">[Базовый]</span></span>
+                <span class="text-[10px] px-1 py-0.5 bg-cyan-900/40 rounded">Стек пакетов</span>
+              </button>
+
+              <button onclick="switchHackingProtocol('vector')" id="btn-vector" class="hack-tab-btn w-full text-left px-3 py-2.5 rounded text-xs border border-slate-800 hover:border-slate-700 bg-slate-900/30 text-slate-400 font-bold flex justify-between items-center transition-all">
+                <span>ОС «ВЕКТОР» <span class="text-slate-500 font-normal">[Инженерный]</span></span>
+                <span class="text-[10px] px-1 py-0.5 bg-slate-850 rounded">Матрица ячеек</span>
+              </button>
+
+              <button onclick="switchHackingProtocol('atlas')" id="btn-atlas" class="hack-tab-btn w-full text-left px-3 py-2.5 rounded text-xs border border-slate-800 hover:border-slate-700 bg-slate-900/30 text-slate-400 font-bold flex justify-between items-center transition-all">
+                <span>ОС «АТЛАС / КВАНТ» <span class="text-slate-500 font-normal">[Высший]</span></span>
+                <span class="text-[10px] px-1 py-0.5 bg-slate-850 rounded">Изолир. кластеры</span>
+              </button>
+
+              <!-- PPKH Button -->
+              <div class="text-[10px] text-slate-500 uppercase tracking-wider font-bold pt-2">ППКХ (Прямой контр-хакинг)</div>
+              <button onclick="switchHackingProtocol('ppkh')" id="btn-ppkh" class="hack-tab-btn w-full text-left px-3 py-2.5 rounded text-xs border border-slate-800 hover:border-slate-700 bg-slate-900/30 text-slate-400 font-bold flex justify-between items-center transition-all">
+                <span>ПРОТОКОЛ ППКХ</span>
+                <span class="text-[10px] px-1 py-0.5 bg-red-950/40 text-red-400 rounded">Квантовая дуэль</span>
+              </button>
+            </div>
+            
+            <div class="text-[10px] text-slate-500 bg-slate-900/40 p-3 rounded border border-slate-850/60 leading-relaxed">
+              <strong>Справка СНБ:</strong> Несанкционированная дешифрация сторонних сигналов без подписи ОСК влечет немедленное удаление профиля оперативника из тактической сети.
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Screen Area -->
+        <div class="lg:col-span-8">
+          <div class="border border-slate-800 bg-[#070b14] p-4 md:p-6 rounded-lg relative min-h-[420px] flex flex-col justify-between">
+            <!-- Cybernetic Corner Accents -->
+            <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-slate-600"></div>
+            <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-slate-600"></div>
+            <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-slate-600"></div>
+            <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-slate-600"></div>
+
+            <!-- Terminal Screen Header -->
+            <div class="flex justify-between items-center border-b border-slate-850 pb-3 mb-4">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></span>
+                <span id="terminal-screen-title" class="text-xs font-bold tracking-wider text-slate-300">ИНТЕРФЕЙС ДЕШИФРАЦИИ: ОС «ЗАРЯ»</span>
+              </div>
+              <span id="hack-status-badge" class="text-[10px] uppercase px-2 py-0.5 rounded font-bold bg-cyan-950/40 text-cyan-400">ПОДКЛЮЧЕНО</span>
+            </div>
+
+            <!-- TERMINAL CONTENT CONTAINERS -->
+            <div id="hack-zone" class="grow flex flex-col justify-center">
+              
+              <!-- 1. OS ZARYA DECRYPTION -->
+              <div id="hack-zarya" class="hack-section space-y-4">
+                <div class="bg-slate-900/60 p-3 rounded border border-slate-850 text-xs text-slate-400 leading-relaxed">
+                  <strong>Правила РОСК (ОС «Заря»):</strong> Взлом осуществляется путем последовательного удаления данных из стека пакетов. За один системный такт можно удалить от 1 до <span id="zarya-max-m">3</span> пакетов. Авторизацию в системе получает сторона (вы или защитный ИИ), совершившая <strong>последний ход</strong> (извлекшая пакет с сид-ключом).
+                </div>
+                
+                <div class="flex flex-col items-center justify-center p-4 bg-slate-950/60 border border-slate-850 rounded">
+                  <div class="text-xs text-slate-500 uppercase tracking-widest mb-2">Осталось пакетов в стеке</div>
+                  <div id="zarya-stack-count" class="text-5xl font-bold tracking-wider text-cyan-400 mb-4 tech-header">15</div>
+                  
+                  <div class="w-full max-w-sm flex items-center gap-2 bg-slate-900 p-2 rounded border border-slate-800">
+                    <span class="text-[10px] text-slate-500 ml-1">ИЗВЛЕЧЬ ПАКЕТЫ:</span>
+                    <button onclick="makeZaryaMove(1)" class="grow bg-slate-800 hover:bg-cyan-900/50 hover:text-cyan-400 border border-slate-750 px-2 py-1 text-xs rounded font-bold transition-all">1</button>
+                    <button onclick="makeZaryaMove(2)" class="grow bg-slate-800 hover:bg-cyan-900/50 hover:text-cyan-400 border border-slate-750 px-2 py-1 text-xs rounded font-bold transition-all">2</button>
+                    <button onclick="makeZaryaMove(3)" class="grow bg-slate-800 hover:bg-cyan-900/50 hover:text-cyan-400 border border-slate-750 px-2 py-1 text-xs rounded font-bold transition-all">3</button>
+                  </div>
+                  
+                  <div id="zarya-feedback" class="text-xs text-amber-400 mt-3 font-medium h-5">Ожидание хода оперативника...</div>
+                </div>
+
+                <div class="flex justify-end gap-2">
+                  <button onclick="resetZaryaGame()" class="text-[10px] px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-bold border border-slate-700">СБРОСИТЬ СТЕК</button>
+                </div>
+              </div>
+
+              <!-- 2. OS VECTOR DECRYPTION -->
+              <div id="hack-vector" class="hack-section hidden space-y-4">
+                <div class="bg-slate-900/60 p-3 rounded border border-slate-850 text-xs text-slate-400 leading-relaxed">
+                  <strong>Правила РОСК (ОС «Вектор»):</strong> Поочередно уничтожайте секторы матрицы памяти. Удаление сектора стирает его и все ячейки, находящиеся <strong>строго выше и правее</strong> него. Активация ловушки в ячейке [1, 1] <span class="text-red-400 font-bold">(красная ячейка)</span> вызывает критический сбой и деавторизацию. Вы должны заставить ИИ совершить этот выбор.
+                </div>
+
+                <div class="flex justify-center p-4 bg-slate-950/60 border border-slate-850 rounded overflow-x-auto">
+                  <div class="grid grid-cols-5 gap-1.5" id="vector-grid">
+                    <!-- Dynamic Grid Generating via JS -->
+                  </div>
+                </div>
+
+                <div class="flex justify-between items-center text-xs">
+                  <span id="vector-feedback" class="text-amber-400 font-medium">Ваш ход. Выберите уязвимую ячейку.</span>
+                  <button onclick="resetVectorGame()" class="text-[10px] px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-bold border border-slate-700">ОЧИСТИТЬ МАТРИЦУ</button>
+                </div>
+              </div>
+
+              <!-- 3. OS ATLAS / KVANT DECRYPTION -->
+              <div id="hack-atlas" class="hack-section hidden space-y-4">
+                <div class="bg-slate-900/60 p-3 rounded border border-slate-850 text-xs text-slate-400 leading-relaxed">
+                  <strong>Правила РОСК (ОС «Атлас/Квант»):</strong> Поле разделено на три изолированных кластера объемом А, В и С гигабайт. За один ход сотрите любой объем данных из <strong>одного</strong> кластера. Проигравшей признается сторона, которая не может совершить ход (все данные очищены).
+                </div>
+
+                <div class="grid grid-cols-3 gap-4 p-4 bg-slate-950/60 border border-slate-850 rounded">
+                  <!-- Cluster A -->
+                  <div class="flex flex-col items-center bg-slate-900/50 p-3 rounded border border-slate-800">
+                    <span class="text-[10px] text-slate-500 font-bold mb-1">КЛАСТЕР A</span>
+                    <span id="atlas-val-a" class="text-3xl font-bold text-cyan-400 mb-3">3 GB</span>
+                    <input type="range" id="atlas-slider-a" min="0" max="3" value="3" oninput="updateAtlasSlider('a')" class="w-full h-1 bg-slate-850 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                    <button onclick="applyAtlasMove('a')" class="w-full mt-3 bg-cyan-950 text-cyan-400 hover:bg-cyan-900 border border-cyan-800 text-[10px] py-1 rounded font-bold transition-all">Стереть</button>
+                  </div>
+                  <!-- Cluster B -->
+                  <div class="flex flex-col items-center bg-slate-900/50 p-3 rounded border border-slate-800">
+                    <span class="text-[10px] text-slate-500 font-bold mb-1">КЛАСТЕР B</span>
+                    <span id="atlas-val-b" class="text-3xl font-bold text-cyan-400 mb-3">5 GB</span>
+                    <input type="range" id="atlas-slider-b" min="0" max="5" value="5" oninput="updateAtlasSlider('b')" class="w-full h-1 bg-slate-850 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                    <button onclick="applyAtlasMove('b')" class="w-full mt-3 bg-cyan-950 text-cyan-400 hover:bg-cyan-900 border border-cyan-800 text-[10px] py-1 rounded font-bold transition-all">Стереть</button>
+                  </div>
+                  <!-- Cluster C -->
+                  <div class="flex flex-col items-center bg-slate-900/50 p-3 rounded border border-slate-800">
+                    <span class="text-[10px] text-slate-500 font-bold mb-1">КЛАСТЕР C</span>
+                    <span id="atlas-val-c" class="text-3xl font-bold text-cyan-400 mb-3">7 GB</span>
+                    <input type="range" id="atlas-slider-c" min="0" max="7" value="7" oninput="updateAtlasSlider('c')" class="w-full h-1 bg-slate-850 rounded-lg appearance-none cursor-pointer accent-cyan-500">
+                    <button onclick="applyAtlasMove('c')" class="w-full mt-3 bg-cyan-950 text-cyan-400 hover:bg-cyan-900 border border-cyan-800 text-[10px] py-1 rounded font-bold transition-all">Стереть</button>
+                  </div>
+                </div>
+
+                <div class="flex justify-between items-center text-xs">
+                  <span id="atlas-feedback" class="text-amber-400 font-medium">Ваш ход. Укажите объем удаления на слайдере.</span>
+                  <button onclick="resetAtlasGame()" class="text-[10px] px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-bold border border-slate-700">ОЧИСТИТЬ ПОЛЯ</button>
+                </div>
+              </div>
+
+              <!-- 4. PROTOCOL PPKH SIMULATOR -->
+              <div id="hack-ppkh" class="hack-section hidden space-y-4">
+                <div class="bg-slate-900/60 p-3 rounded border border-slate-850 text-xs text-slate-400 leading-relaxed">
+                  <strong>Протокол прямого контр-хакинг (ППКХ):</strong> Атака квантового шлема противника. Зацикленное кольцо из секторов ($k=2 \cdot L_{att}+2$).
+                  <br>• Лимит: 3 раунда. Если Защитник пеленгует Атакующего — взлом прерывается. Шаг Атакующего равен $L_{att}$ в любую сторону.
+                </div>
+
+                <div class="p-4 bg-slate-950/60 border border-slate-850 rounded space-y-4">
+                  <div class="flex justify-between items-center text-[11px] text-slate-500 font-bold pb-2 border-b border-slate-850">
+                    <span>РАУНД: <span id="ppkh-round" class="text-cyan-400">1</span>/3</span>
+                    <span>КОЛЬЦО СЕКТОРОВ: <span id="ppkh-ring-size" class="text-cyan-400">8</span></span>
+                  </div>
+
+                  <!-- Visual Ring Representation -->
+                  <div class="flex justify-center py-2">
+                    <div id="ppkh-ring-container" class="flex flex-wrap gap-2 justify-center max-w-md">
+                      <!-- Sectors dynamically injected by JS -->
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="p-3 bg-slate-900/40 border border-slate-800 rounded">
+                      <div class="text-[10px] text-slate-400 font-bold uppercase mb-2">Настройки Атакующего</div>
+                      <div class="flex justify-between items-center text-xs gap-4">
+                        <span>Атакующая мощность ($L_{att}$):</span>
+                        <select id="ppkh-latt" onchange="initPPKHGame()" class="bg-slate-950 text-cyan-400 border border-slate-800 px-2 py-1 rounded">
+                          <option value="1">1</option>
+                          <option value="2">2</option>
+                          <option value="3" selected>3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                        </select>
+                      </div>
+                      <div class="text-[10px] text-slate-500 mt-2">
+                        Длина кольца: <span id="ppkh-stat-k">8</span>, Макс. прыжок: <span id="ppkh-stat-n">3</span> сект.
+                      </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-900/40 border border-slate-800 rounded">
+                      <div class="text-[10px] text-slate-400 font-bold uppercase mb-2">Настройки Защитника</div>
+                      <div class="flex justify-between items-center text-xs gap-4">
+                        <span>Оборонный потенциал ($L_{def}$):</span>
+                        <select id="ppkh-ldef" onchange="initPPKHGame()" class="bg-slate-950 text-emerald-400 border border-slate-800 px-2 py-1 rounded">
+                          <option value="1">1</option>
+                          <option value="2" selected>2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                        </select>
+                      </div>
+                      <div class="text-[10px] text-slate-500 mt-2">
+                        Емкость сканирования за ход (S): <span id="ppkh-stat-s">1</span> сект.
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Controls for Player Action -->
+                  <div class="p-3 bg-slate-900/60 border border-slate-850 rounded flex flex-col md:flex-row justify-between items-center gap-3">
+                    <div class="text-xs">
+                      <span class="text-slate-400">Ваша позиция:</span> <span id="ppkh-current-pos" class="font-bold text-cyan-400">0</span>
+                    </div>
+                    <div class="flex items-center gap-1.5 w-full md:w-auto">
+                      <span class="text-[10px] text-slate-500 mr-2 uppercase">Сделать прыжок:</span>
+                      <div id="ppkh-move-buttons" class="flex gap-1.5 grow">
+                        <!-- Dynamic step options -->
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="flex justify-between items-center text-xs">
+                  <span id="ppkh-feedback" class="text-amber-400 font-medium">Квантовая сессия активна. Совершите тактический прыжок.</span>
+                  <button onclick="initPPKHGame()" class="text-[10px] px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded font-bold border border-slate-700">НОВАЯ СЕССИЯ</button>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Terminal Screen Footer -->
+            <div class="mt-4 pt-3 border-t border-slate-850 flex justify-between items-center text-[10px] text-slate-500 font-mono">
+              <span>SECURITY LOG STACK: LOCALHOST</span>
+              <span>v1.07-SECURE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: EVOLUTION GRID & OPERATIVE SPECS -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-2 border-l-2 border-cyan-500 pl-3">
+        <h2 class="text-lg font-bold tracking-wider text-slate-200 uppercase tech-header">ЧАСТЬ III. СЕТКА МОДЕРНИЗАЦИИ И СПЕЦИФИКАЦИЯ ОПЕРАТИВНИКОВ</h2>
+      </div>
+
+      <!-- Branch Selection Hub Buttons -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <button onclick="selectBranch('bio')" id="branch-tab-bio" class="branch-tab py-4 px-3 rounded-lg border border-cyan-500 bg-cyan-950/20 text-cyan-400 font-bold transition-all text-center flex flex-col items-center justify-center gap-1.5 glow-border-cyan">
+          <i data-lucide="activity" class="w-5 h-5 text-cyan-400"></i>
+          <span class="text-xs uppercase tracking-wider">Биотехнологии</span>
+          <span class="text-[9px] text-cyan-500 font-normal">Обеспечение и терапия</span>
+        </button>
+
+        <button onclick="selectBranch('steel')" id="branch-tab-steel" class="branch-tab py-4 px-3 rounded-lg border border-slate-800 bg-slate-900/30 text-slate-400 hover:border-slate-700 font-bold transition-all text-center flex flex-col items-center justify-center gap-1.5">
+          <i data-lucide="shield" class="w-5 h-5"></i>
+          <span class="text-xs uppercase tracking-wider">Сталь</span>
+          <span class="text-[9px] text-slate-500 font-normal">Штурм и подавление</span>
+        </button>
+
+        <button onclick="selectBranch('shadow')" id="branch-tab-shadow" class="branch-tab py-4 px-3 rounded-lg border border-slate-800 bg-slate-900/30 text-slate-400 hover:border-slate-700 font-bold transition-all text-center flex flex-col items-center justify-center gap-1.5">
+          <i data-lucide="eye-off" class="w-5 h-5"></i>
+          <span class="text-xs uppercase tracking-wider">Тень</span>
+          <span class="text-[9px] text-slate-500 font-normal">Скрытность и саботаж</span>
+        </button>
+
+        <button onclick="selectBranch('spectrum')" id="branch-tab-spectrum" class="branch-tab py-4 px-3 rounded-lg border border-slate-800 bg-slate-900/30 text-slate-400 hover:border-slate-700 font-bold transition-all text-center flex flex-col items-center justify-center gap-1.5">
+          <i data-lucide="crosshair" class="w-5 h-5"></i>
+          <span class="text-xs uppercase tracking-wider">Спектр</span>
+          <span class="text-[9px] text-slate-500 font-normal">Дальний бой и РЭБ</span>
+        </button>
+      </div>
+
+      <!-- MAIN SPLIT LAYOUT: Vertical Tiers List (Left) & Dynamic Radar + Bio Dossier (Right) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        <!-- Vertical list of operatives segmented by tiers (КГД I - КГД IV) -->
+        <div class="lg:col-span-4 space-y-4">
+          <div class="border border-slate-800 bg-[#070b14] p-4 rounded-lg">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-4 border-b border-slate-850 pb-2">Список доступных квалификаций</h3>
+            
+            <div id="operatives-vertical-list" class="space-y-4">
+              <!-- Dynamically rendered tiers of buttons depending on selected branch -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Comprehensive Operative Specification (Dossier Screen) -->
+        <div class="lg:col-span-8">
+          <div class="border border-slate-800 bg-[#070b14] p-6 rounded-lg relative min-h-[550px] flex flex-col justify-between overflow-hidden">
+            <!-- Hexagonal styling decoration -->
+            <div class="absolute -right-20 -top-20 w-60 h-60 border border-slate-800/40 rounded-full pointer-events-none"></div>
+            <div class="absolute -right-16 -top-16 w-48 h-48 border border-slate-800/20 rounded-full pointer-events-none"></div>
+
+            <div class="relative z-10 space-y-6">
+              
+              <!-- Dossier Header Block -->
+              <div class="flex flex-col md:flex-row justify-between items-start gap-4 pb-4 border-b border-slate-850">
+                <div>
+                  <div class="flex items-center gap-2 mb-1">
+                    <span id="dossier-kgd" class="px-2 py-0.5 text-[9px] font-bold bg-cyan-950 text-cyan-400 rounded tracking-widest uppercase">КГД I</span>
+                    <span id="dossier-os" class="px-2 py-0.5 text-[9px] font-bold bg-slate-900 text-slate-400 rounded tracking-widest uppercase">ОС «ЗАРЯ»</span>
+                  </div>
+                  <h2 id="dossier-name" class="text-2xl font-bold tracking-wider text-white tech-header uppercase">Полевой медик</h2>
+                  <p id="dossier-role" class="text-xs text-cyan-400 font-medium italic mt-1">Мобильный реаниматор переднего края.</p>
+                </div>
+                
+                <div class="text-right flex flex-col md:items-end gap-1 text-[11px] text-slate-500">
+                  <div class="flex items-center gap-2"><span class="text-slate-600">РЕГЛАМЕНТ РОСК:</span> <span id="dossier-rosk-level" class="text-slate-300 font-bold">Уровень 1</span></div>
+                  <div class="flex items-center gap-2"><span class="text-slate-600">СЕТЕВАЯ МОЩНОСТЬ:</span> <span id="dossier-net-power" class="text-slate-300 font-bold">2</span></div>
+                  <div class="flex items-center gap-2"><span class="text-slate-600">ППКХ:</span> <span id="dossier-ppkh-stats" class="text-slate-300 font-bold">Latt=1, Ldef=1</span></div>
+                </div>
+              </div>
+
+              <!-- Main dossier split: Description & Equipment VS Live Radar Chart -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Specs & Description Text -->
+                <div class="space-y-4 text-xs leading-relaxed">
+                  <div>
+                    <h4 class="text-slate-400 font-bold uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                      <span class="w-1.5 h-3 bg-cyan-500 rounded-sm"></span> ПОВЕДЕНИЕ В БОЮ
+                    </h4>
+                    <p id="dossier-combat-behavior" class="text-slate-300 bg-slate-900/30 p-2.5 rounded border border-slate-850/60">
+                      Держится непосредственно за спинами штурмовых групп (КГД I-II ветки «Сталь»). Не вступает в затяжные огневые дуэли. Использует шлем-модуль «Пульс» для мгновенного обнаружения павших союзников за укрытиями. Выдвигается к цели под прикрытием дымов или подавляющего огня, осуществляет грубое хирургическое стягивание ран с помощью модуля «Мясник» и немедленно отступает в безопасную зону.
+                    </p>
+                  </div>
+
+                  <div>
+                    <h4 class="text-slate-400 font-bold uppercase tracking-wider mb-1.5 flex items-center gap-1.5">
+                      <span class="w-1.5 h-3 bg-emerald-500 rounded-sm"></span> СИНЕРГИЯ И КЛЮЧЕВАЯ ИНТЕГРАЦИЯ
+                    </h4>
+                    <p id="dossier-synergy" class="text-slate-300 bg-slate-900/30 p-2.5 rounded border border-slate-850/60">
+                      Эффективен в связке с Солдатом и Штурмовиком. Возвращает их в строй за секунды, поддерживая темп наступления.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Radar Chart Visualiser (pure SVG) -->
+                <div class="flex flex-col items-center justify-center p-4 bg-slate-950/40 rounded border border-slate-850/60 relative">
+                  <div class="text-[10px] font-bold text-slate-500 tracking-wider uppercase mb-2">ПОКАЗАТЕЛИ ЭФФЕКТИВНОСТИ В БОЮ</div>
+                  <div class="w-full aspect-square max-w-[200px]" id="radar-container">
+                    <!-- SVG Radar is injected here -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tactical Hardware Block and Resources -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4 border-t border-slate-850 text-xs">
+                <div class="p-3 bg-slate-900/40 rounded border border-slate-850">
+                  <h4 class="font-bold text-slate-300 mb-2 uppercase flex items-center gap-1.5"><i data-lucide="shield-check" class="w-4 h-4 text-cyan-400"></i> АППАРАТНАЯ ЭКИПИРОВКА</h4>
+                  <ul class="space-y-2 text-[11px]" id="dossier-equip-list">
+                    <li><strong class="text-cyan-400">Шлем-модуль «Пульс»:</strong> Био-радар ближнего действия. Сканирует активность сердечных мышц союзников в радиусе 15м.</li>
+                    <li><strong class="text-cyan-400">Профильный модуль «Мясник»:</strong> Поясной стек быстрой полевой хирургии. Позволяет оперативно стягивать раны скобами.</li>
+                  </ul>
+                </div>
+
+                <div class="p-3 bg-slate-900/40 rounded border border-slate-850 flex flex-col justify-between">
+                  <div>
+                    <h4 class="font-bold text-slate-300 mb-2 uppercase flex items-center gap-1.5"><i data-lucide="battery" class="w-4 h-4 text-cyan-400"></i> РАСХОДНЫЕ МАТЕРИАЛЫ ТАК</h4>
+                    <div class="space-y-1.5 text-[11px]" id="dossier-resources-list">
+                      <div class="flex justify-between"><span>Медико-Терапевтический Комплект (МТК):</span> <span class="font-bold text-emerald-400">5/5 ед.</span></div>
+                      <div class="flex justify-between"><span>Унифицированный Энерго-Блок (УЭБ):</span> <span class="font-bold text-cyan-400">3/3 ед.</span></div>
+                    </div>
+                  </div>
+                  <div id="passive-he-note" class="text-[10px] text-slate-500 italic mt-3 pt-2 border-t border-slate-800 leading-tight hidden">
+                    * Экзоскелет оснащен гидравлическими компенсаторами. Нет урона при падении до 10м.
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Operational certification label -->
+            <div class="mt-6 pt-3 border-t border-slate-850 flex justify-between items-center text-[10px] text-slate-500">
+              <span>СЕРИЯ ШАССИ: КЛАСС СЕРТИФИЦИРОВАН ШТАБОМ ОКРУГА</span>
+              <span class="font-bold text-slate-400 tracking-wider">STATUS: CERTIFIED</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-880 bg-[#070a13] mt-20 py-8 px-4 text-center text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto space-y-2">
+      <div class="tech-header text-sm tracking-wider text-slate-400">ТАКТИЧЕСКИЙ ОКО-ИНТЕРФЕЙС "ОКРУГ"</div>
+      <p class="max-w-2xl mx-auto text-slate-600">
+        Система сетевого контроля Военного трибунала. Все права защищены. Любое копирование тактической информации без подписи цифрового ключа командира сектора преследуется по протоколу трибунала ОКО-04.
+      </p>
+    </div>
+  </footer>
+
+  <!-- DATABASE OBJECT DEFINITION WITH STRICT COPIED CONTENT -->
+  <script>
+    const OPERATIVES_DB = {
+      bio: {
+        title: "Биотехнологии",
+        description: "Обеспечение, удержание и терапия союзных сил",
+        color: "cyan",
+        operatives: [
+          {
+            id: "bio_med",
+            name: "Полевой медик",
+            kgd: "КГД I",
+            os: "ОС «Заря»",
+            rosk: "Уровень 1",
+            power: 2,
+            ppkh: "Latt=1, Ldef=1",
+            latt: 1,
+            ldef: 1,
+            role: "Мобильный реаниматор переднего края.",
+            behavior: "Держится непосредственно за спинами штурмовых групп (КГД I-II ветки «Сталь»). Не вступает в затяжные огневые дуэли. Использует шлем-модуль «Пульс» для мгновенного обнаружения павших союзников за укрытиями. Выдвигается к цели под прикрытием дымов или подавляющего огня, осуществляет грубое хирургическое стягивание ран с помощью модуля «Мясник» и немедленно отступает в безопасную зону.",
+            synergy: "Эффективен в связке с Солдатом и Штурмовиком. Возвращает их в строй за секунды, поддерживая темп наступления.",
+            stats: { atk: 15, def: 30, mob: 80, vit: 50, spt: 95 },
+            equipment: [
+              "<strong>Шлем-модуль «Пульс»:</strong> Био-радар ближнего действия. Сканирует электромагнитную активность сердечных мышц союзников в радиусе 15 метров сквозь препятствия. Подсвечивает критическое состояние бойцов тревожным красным маркером.",
+              "<strong>Профильный модуль «Мясник»:</strong> Поясной стек быстрой полевой хирургии. Позволяет оперативно стягивать рваные раны полимерными скобами и заливать их защитным герметикам непосредственно на линии огня."
+            ],
+            resources: [
+              { name: "Медико-Терапевтический Комплект (МТК)", value: "5/5 ед." },
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "3/3 ед." }
+            ]
+          },
+          {
+            id: "bio_med_eng",
+            name: "Полевой медик-инженер",
+            kgd: "КГД II",
+            os: "ОС «Вектор»",
+            rosk: "Уровень 2",
+            power: 4,
+            ppkh: "Latt=2, Ldef=2",
+            latt: 2,
+            ldef: 2,
+            role: "Универсальный специалист технической и биологической поддержки.",
+            behavior: "Позиционируется в полуактивной зоне (вторая линия). Фокусируется на оперативниках, использующих тяжелую экипировку или сервоприводы. Сканирует поле боя визором «Диагност». При обнаружении критического износа брони или повреждения приводов напарника использует рукав «Искра» для мгновенной перепайки контуров ТАК, одновременно восстанавливая физическое состояние бойца.",
+            synergy: "Критически важен для Щитоносцев и Титанов, так как способен чинить их щиты и экзоскелеты непосредственно под вражеским обстрелом.",
+            stats: { atk: 25, def: 50, mob: 55, vit: 60, spt: 90 },
+            equipment: [
+              "<strong>Шлем-модуль «Диагност»:</strong> Специализированный визор двойного спектра. Распознает биологические травмы живых тканей и диагностирует программные сбои в сервоприводах союзных ТАК.",
+              "<strong>Профильный модуль «Искра»:</strong> Интегрированный рукав-манипулятор. Позволяет прямо в бою перепаивать сгоревшие микросхемы экзоскелетов напарников, оперативно возвращая подвижность их сервоприводам."
+            ],
+            resources: [
+              { name: "Медико-Терапевтический Комплект (МТК)", value: "4/4 ед." },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "4/4 ед." },
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "2/2 ед." }
+            ]
+          },
+          {
+            id: "bio_eng",
+            name: "Медик-инженер",
+            kgd: "КГД III",
+            os: "ОС «Атлас»",
+            rosk: "Уровень 3",
+            power: 6,
+            ppkh: "Latt=3, Ldef=3",
+            latt: 3,
+            ldef: 3,
+            role: "Координатор дистанционной эвакуации и терапии.",
+            behavior: "Занимает закрытые позиции глубоко в тылу или за прочными фортификационными сооружениями. Используя нейросеть «Улей», оценивает ситуацию с высоты и координирует дроны. Направляет летающие мед-дроны для реанимации штурмовиков на дальних рубежах, а в случае тяжелых затяжных столкновений отправляет бронированного «Огра» для безопасной эвакуации ключевых оперативников из-под шквального огня.",
+            synergy: "Идеально взаимодействует со скрытными классами (Диверсант, Фантом), обеспечивая их лечение на расстоянии без риска демаскировки лежки.",
+            stats: { atk: 35, def: 60, mob: 40, vit: 65, spt: 95 },
+            equipment: [
+              "<strong>Шлем-модуль «Улей»:</strong> Координационный нейросетевой хаб. Выводит интерактивную 3D-карту местности. Позволяет силой мысли направлять роботизированные системы по безопасным траекториям.",
+              "<strong>Профильный модуль «Ковчег»:</strong> Тяжелый заплечный контейнер с пусковыми шахтами поддержки. Включает 2 летающих мед-дрона (распыляют нано-гель) и гусеничного спасателя «Огр» (бронированная платформа с дымовой завесой)."
+            ],
+            resources: [
+              { name: "Медико-Терапевтический Комплект (МТК)", value: "6/6 ед." },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "2/2 ед." },
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "3/3 ед." }
+            ]
+          },
+          {
+            id: "bio_strat",
+            name: "Полевой био-инженер",
+            kgd: "КГД IV",
+            os: "ОС «Квант»",
+            rosk: "Уровень 3",
+            power: 8,
+            ppkh: "Latt=3, Ldef=5",
+            latt: 3,
+            ldef: 5,
+            role: "Стратегический узел обороны, развертывание мобильной крепости.",
+            behavior: "Перемещается в геометрическом центре отряда. При развертывании модуля «Купол Асклепия» фиксирует позицию, превращая ее в неприступную зону. Под прикрытием купола координирует медицинских стражей «Асклепий», которые выполняют двойную функцию: латают союзников на бегу и жестко зачищают периметр из дробовиков от прорвавшихся сил противника.",
+            synergy: "Формирует абсолютный оборонительный рубеж в связке с Титаном и Жнецом. Позволяет тяжелым огневым платформам вести непрерывный огонь, игнорируя ответные попадания.",
+            stats: { atk: 65, def: 85, mob: 30, vit: 80, spt: 100 },
+            equipment: [
+              "<strong>Шлем-модуль «Оазис»:</strong> Квантовый синхронизатор. Регистрирует биоэлектрические импульсы нервной системы всех членов группы, распределяя энергию купола по необходимости.",
+              "<strong>Профильный модуль «Купол Асклепия»:</strong> Оборонно-реанимационный полевой комплекс. Генератор силового поля (купол до 40м) и 2 медицинских стража «Асклепий» с встроенными тактическими дробовиками."
+            ],
+            resources: [
+              { name: "Медико-Терапевтический Комплект (МТК)", value: "2/2 ед." },
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "3/3 ед." },
+              { name: "Реактивно-Кинетический Модуль (РКМ)", value: "2/2 ед. (1 ед. = 20 выстр.)" }
+            ]
+          }
+        ]
+      },
+      steel: {
+        title: "Сталь",
+        description: "Штурм, прорыв и позиционное удержание секторов",
+        color: "slate",
+        operatives: [
+          {
+            id: "steel_sol",
+            name: "Солдат",
+            kgd: "КГД I",
+            os: "ОС «Заря»",
+            rosk: "Уровень 1",
+            power: 2,
+            ppkh: "Latt=1, Ldef=1",
+            latt: 1,
+            ldef: 1,
+            role: "Линейный боец подавления, основа огневой группы.",
+            behavior: "Ведет агрессивный фронтальный бой на средних и ближних дистанциях. Использует серво-каркас «Рихтовщик» для ведения непрерывного и кучного огня из тяжелого автоматического оружия. Ломает легкие укрытия противника физической силой приводов, вынуждая врага отступать на открытые пространства. Обладает пассивными гидравлическими компенсаторами.",
+            synergy: "Снабжается боеприпасами от класса Поддержка, прикрывается Полевым медиком.",
+            stats: { atk: 75, def: 55, mob: 45, vit: 70, spt: 15 },
+            equipment: [
+              "<strong>Шлем-модуль «Удар-1»:</strong> Баллистический визор. Выводит на стекло расчетную траекторию полета пуль и динамическую сетку упреждения при стрельбе в движении.",
+              "<strong>Профильный модуль «Рихтовщик»:</strong> Навесные гидравлические приводы плеч и рук. Поглощают до 30% отдачи оружия. Позволяют оперативнику крушить кирпичные препятствия ударом приклада."
+            ],
+            resources: [
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "4/4 ед." },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "3/3 ед." }
+            ],
+            steel_passive: true
+          },
+          {
+            id: "steel_sh",
+            name: "Штурмовик",
+            kgd: "КГД II",
+            os: "ОС «Вектор»",
+            rosk: "Уровень 1",
+            power: 4,
+            ppkh: "Latt=2, Ldef=2",
+            latt: 2,
+            ldef: 2,
+            role: "Инициатор столкновений, фланговый прорыв.",
+            behavior: "Использует реактивный ранец «Кувалда» для стремительного сокращения дистанции или захода во фланг/тыл противника. Игнорирует гранаты и светошумовые эффекты благодаря бронемаске «Шквал». Врывается на вражеские позиции на максимальной скорости, сея панику и уничтожая ключевые цели в ближнем бою.",
+            synergy: "Действует в связке с Раннером для одновременного быстрого удара с двух направлений.",
+            stats: { atk: 85, def: 50, mob: 85, vit: 65, spt: 20 },
+            equipment: [
+              "<strong>Шлем-модуль «Шквал»:</strong> Защитная бронемаска с компенсаторами давления во внутреннем ухе. Полностью нейтрализует последствия светошумовых взрывов, исключая баротравмы.",
+              "<strong>Профильный модуль «Кувалда»:</strong> Реактивный ранец и сервоусилители бедер. Увеличивают скорость бега на 20%, позволяют совершать прыжки на крыши зданий и резкие боковые рывки уклонения."
+            ],
+            resources: [
+              { name: "Реактивно-Кинетический Модуль (РКМ)", value: "6/6 ед. (1 маневр = 1 ед.)" },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "2/2 ед." }
+            ],
+            steel_passive: true
+          },
+          {
+            id: "steel_shld",
+            name: "Щитоносец",
+            kgd: "КГД II",
+            os: "ОС «Вектор»",
+            rosk: "Уровень 1",
+            power: 4,
+            ppkh: "Latt=1, Ldef=3",
+            latt: 1,
+            ldef: 3,
+            role: "Мобильное тактическое укрытие, авангард группы.",
+            behavior: "Двигается строго впереди штурмовой группы. Раскрывает щит «Жало», формируя непреодолимый для кинетического оружия барьер. Медленно выдавливает противника с позиций, прикрывая собой более уязвимых союзников. В ближнем бою использует мономолекулярное острие сложенного щита для нейтрализации тяжелобронированных единиц врага.",
+            synergy: "Обязательный напарник для Стрелка или Снайпера. Позволяет им вести огонь из-за своей спины прямо посреди открытого пространства.",
+            stats: { atk: 45, def: 95, mob: 35, vit: 80, spt: 60 },
+            equipment: [
+              "<strong>Шлем-модуль «Стена»:</strong> Индикатор целостности барьера. Показывает структурный износ щита и указывает направление ведения вражеского огня.",
+              "<strong>Профильный модуль «Жало»:</strong> Тяжелое трансформируемое копье. Мономолекулярный наконечник легко режет обшивку техники. При активации триггера раскрывается веером, образуя прочный ростовой титановый щит."
+            ],
+            resources: [
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "4/4 ед." },
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "6/6 ед." }
+            ],
+            steel_passive: true
+          },
+          {
+            id: "steel_supp",
+            name: "Поддержка",
+            kgd: "КГД II",
+            os: "ОС «Вектор»",
+            rosk: "Уровень 1",
+            power: 4,
+            ppkh: "Latt=1, Ldef=3",
+            latt: 1,
+            ldef: 3,
+            role: "Мобильный склад снабжения и тактическое прикрытие.",
+            behavior: "Позиционируется непосредственно за штурмовой группой. С помощью шлема «Снабженец» контролирует остаток патронов у напарников и своевременно сбрасывает им тяжелые цинки. Ведет плотный заградительный огонь с рук благодаря грузовому ранцу «Мул».",
+            synergy: "Обеспечивает автономность затяжных операций для штурмовых классов и непрерывную работу снайперских позиций.",
+            stats: { atk: 60, def: 65, mob: 45, vit: 75, spt: 85 },
+            equipment: [
+              "<strong>Шлем-модуль «Снабженец»:</strong> Система мониторинга остатка патронов у союзников и контроля зон тактического снабжения.",
+              "<strong>Профильный модуль «Мул»:</strong> Грузовой ранец с системой автоподачи ленточного питания и быстрого сброса тяжелых патронных цинков."
+            ],
+            resources: [
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "4/4 ед." },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "4/4 ед." }
+            ],
+            steel_passive: true
+          },
+          {
+            id: "steel_titan",
+            name: "Титан",
+            kgd: "КГД III",
+            os: "ОС «Атлас»",
+            rosk: "Уровень 3",
+            power: 6,
+            ppkh: "Latt=2, Ldef=4",
+            latt: 2,
+            ldef: 4,
+            role: "Сверхтяжелая огневая точка, зачистка секторов.",
+            behavior: "Медленно продвигается по центральным коридорам. С помощью маски «Бастион» пеленгует угрозы сквозь стены в радиусе 10 метров с помощью встроенного низкочастотного сейсмодатчика. Раскручивает блок стволов роторного пулемета, активируя фронтальный энергетический щит «Легион», и буквально выжигает сектор, заставляя врага отступать.",
+            synergy: "Находится под постоянным инженерным контролем Полевого медика-инженера, который своевременно восполняет ресурс его ТАК.",
+            stats: { atk: 90, def: 85, mob: 25, vit: 95, spt: 30 },
+            equipment: [
+              "<strong>Шлем-модуль «Бастион»:</strong> Глухая бронемаска с системой фильтрации воздуха и защитой от ЭМИ. Оснащен низкочастотным сейсмодатчиком (10м).",
+              "<strong>Профильный модуль «Легион»:</strong> Сверхтяжелый экзокаркас, защищающий от сбивания с ног. Вооружен роторным пулеметом с встроенным силовым щитом перед стволом."
+            ],
+            resources: [
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "2/2 ед." },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "3/3 ед." }
+            ],
+            steel_passive: true
+          },
+          {
+            id: "steel_beast",
+            name: "Авангард «Стальной Зверь»",
+            kgd: "КГД IV",
+            os: "ОС «Квант»",
+            rosk: "Уровень 3",
+            power: 8,
+            ppkh: "Latt=3, Ldef=5",
+            latt: 3,
+            ldef: 5,
+            role: "Абсолютное разрушение оборонительных линий.",
+            behavior: "Действует как живой таран. Прямой нейро-линк «Слияние» позволяет мгновенно реагировать на любые угрозы без задержки приводов. Влетает в укрепленные зоны, разрушая бетонные перекрытия реактивным таранным рывком (впрыск топлива в суставы), одновременно ведет огонь из 30-мм автопушки в предплечье с наведением по взгляду.",
+            synergy: "Требует поддержки Полевого био-инженера, разворачивающего купол защиты прямо в точке его прорыва для закрепления успеха.",
+            stats: { atk: 100, def: 90, mob: 70, vit: 100, spt: 10 },
+            equipment: [
+              "<strong>Шлем-модуль «Слияние»:</strong> Прямой инвазивный нейроинтерфейс. Полностью исключает аппаратную задержку между получением данных и реакцией ТАК.",
+              "<strong>Профильный модуль «Стальной Зверь»:</strong> Экстремальная кибернетическая модификация. Тело полностью сплавлено с экзоскелетом. Имеет реактивный таран и 30-мм автопушку."
+            ],
+            resources: [
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "4/4 ед." },
+              { name: "Реактивно-Кинетический Модуль (РКМ)", value: "3/3 ед. (1 ед. = 5 снарядов)" },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "2/2 ед. (термопластины обшивки)" }
+            ],
+            steel_passive: true
+          }
+        ]
+      },
+      shadow: {
+        title: "Тень",
+        description: "Скрытное проникновение, саботаж и глубокая разведка",
+        color: "emerald",
+        operatives: [
+          {
+            id: "shadow_scout",
+            name: "Лазутчик",
+            kgd: "КГД I",
+            os: "ОС «Заря»",
+            rosk: "Уровень 1",
+            power: 3,
+            ppkh: "Latt=2, Ldef=1",
+            latt: 2,
+            ldef: 1,
+            role: "Передовой скаут-наводчик.",
+            behavior: "Двигается впереди группы в полуприсяде, используя оптоволоконный костюм «Блик». Избегает прямых столкновений. Сканирует местность на наличие ЭМИ-датчиков, растяжек и скрытых снайперов с помощью спектро-визора «Призрак». Помечает цели и передает безопасные маршруты штурмовым группам.",
+            synergy: "Передает координаты затаившихся врагов Стрелку или Снайперу для их быстрого и безопасного устранения.",
+            stats: { atk: 30, def: 20, mob: 85, vit: 35, spt: 80 },
+            equipment: [
+              "<strong>Шлем-модуль «Призрак»:</strong> Спектро-визор тепловизационного спектра. Распознает электромагнитные поля, ЭМИ-ловушки и скрытые лазерные прицелы.",
+              "<strong>Профильный модуль «Блик»:</strong> Маскировочный костюм из светопреломляющих нитей. Создает оптическое размытие. В движении маскировка снижается на 70%."
+            ],
+            resources: [
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "4/4 ед." },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "2/2 ед. (аэрозоль для оптоволокна)" }
+            ],
+            shadow_note: true
+          },
+          {
+            id: "shadow_sab",
+            name: "Диверсант",
+            kgd: "КГД II",
+            os: "ОС «Вектор»",
+            rosk: "Уровень 2",
+            power: 4,
+            ppkh: "Latt=3, Ldef=1",
+            latt: 3,
+            ldef: 1,
+            role: "Организатор вертикальных засад и саботажа в тылу.",
+            behavior: "Использует пневмо-кошку «Зацеп» для скрытного перемещения под потолок, на балки или крыши. Активирует плащ «Мираж» в неподвижном состоянии, полностью сливаясь с окружением в ожидании патрулей. Акустический радар «Шепот» позволяет заранее слышать врагов сквозь стены. Наносит внезапный смертельный удар сверху.",
+            synergy: "Отлично координируется со Снайпером: отвлекает внимание вражеских патрулей на себя, подставляя их под дальние выстрелы напарника.",
+            stats: { atk: 65, def: 25, mob: 90, vit: 40, spt: 75 },
+            equipment: [
+              "<strong>Шлем-модуль «Шепот»:</strong> Акустический пеленгатор. Улавливает тихие шаги и щелчки предохранителей на расстоянии до 20м, проецируя их в виде маркеров.",
+              "<strong>Профильный модуль «Мираж»:</strong> Светопреломляющий плащ высокого разрешения (неподвижность сливает с фоном) и пневмо-кошка «Зацеп» с бесшумным гарпуном."
+            ],
+            resources: [
+              { name: "Реактивно-Кинетический Модуль (РКМ)", value: "4/4 ед. (кевларовый шнур/газ CO2)" },
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "3/3 ед." }
+            ],
+            shadow_note: true
+          },
+          {
+            id: "shadow_run",
+            name: "Раннер",
+            kgd: "КГД II",
+            os: "ОС «Вектор»",
+            rosk: "Уровень 2",
+            power: 4,
+            ppkh: "Latt=3, Ldef=1",
+            latt: 3,
+            ldef: 1,
+            role: "Скоростной фланговый диверсант, прорыв линий связи.",
+            behavior: "Постоянно находится в движении, используя вертикальный бег по стенам (wallrun) и импульсные рывки костюма «Призрак». Благодаря чипу «Вестибуляр» сохраняет идеальную точность стрельбы на безумных скоростях. Использует кратковременную невидимость (15 сек) для прорыва к уязвимым тыловым целям.",
+            synergy: "Идеально заходит во фланг в момент фронтальной атаки Штурмовика, рассеивая внимание обороняющихся.",
+            stats: { atk: 70, def: 20, mob: 100, vit: 45, spt: 50 },
+            equipment: [
+              "<strong>Шлем-модуль «Вестибуляр»:</strong> Сопроцессор стабилизации изображения во время сальто, бега по стенам и перегрузок.",
+              "<strong>Профильный модуль «Призрак»:</strong> Облегченный экзокаркас с импульсными дюзами для прыжков, настенного бега и получения невидимости на 15 секунд."
+            ],
+            resources: [
+              { name: "Реактивно-Кинетический Модуль (РКМ)", value: "4/4 ед. (жидкое топливо для рывков)" },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "2/2 ед. (полимерные амортизаторы)" }
+            ],
+            shadow_note: true
+          },
+          {
+            id: "shadow_phantom",
+            name: "Фантом",
+            kgd: "КГД III",
+            os: "ОС «Атлас»",
+            rosk: "Уровень 3",
+            power: 6,
+            ppkh: "Latt=4, Ldef=2",
+            latt: 4,
+            ldef: 2,
+            role: "Инфильтратор глубокого тыла, дезориентация противника.",
+            behavior: "Полностью скрыт от радаров и сканеров благодаря шлему «Квант-М». Использует модуль «Сдвиг» для мгновенной телепортации на короткие дистанции (до 10 метров) сквозь стены, лазерные решетки и силовые поля. При обнаружении оставляет голограмму-приманку, принимающую огонь на себя.",
+            synergy: "Синергирует со всеми тяжелыми классами. Проникает за вражеские щиты и активирует там хаос, заставляя врагов развернуться спиной к наступающему Титану.",
+            stats: { atk: 80, def: 35, mob: 95, vit: 50, spt: 85 },
+            equipment: [
+              "<strong>Шлем-модуль «Квант-М»:</strong> Квантовый шифратор сигналов. Защищает от обнаружения любыми био-радарами и акустическими сенсорами врага.",
+              "<strong>Профильный модуль «Сдвиг»:</strong> Квантовый генератор смещения пространства. Телепортация до 10м сквозь преграды с созданием голограммы-приманки."
+            ],
+            resources: [
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "3/3 ед." },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "2/2 ед. (кристаллы стабилизации)" }
+            ],
+            shadow_note: true
+          },
+          {
+            id: "shadow_astral",
+            name: "Астрал",
+            kgd: "КГД IV",
+            os: "ОС «Квант»",
+            rosk: "Уровень 3",
+            power: 8,
+            ppkh: "Latt=5, Ldef=3",
+            latt: 5,
+            ldef: 3,
+            role: "Квантовый диверсант-контроллер, взлом тактической сети.",
+            behavior: "Самый опасный класс ветки саботажа. Используя дешифратор «Святотатство», перехватывает управление вражескими роботами, дронами и турелями в радиусе 30м. В случае угрозы жизни переходит в режим «Квантовой вуали» (8 сек), становясь бесплотным призраком, невосприимчивым к любому урону.",
+            synergy: "Превращает технологическое превосходство противника в его главную уязвимость. Работает автономно, но наиболее эффективен при поддержке Охотника, прикрывающего отход.",
+            stats: { atk: 85, def: 55, mob: 80, vit: 60, spt: 100 },
+            equipment: [
+              "<strong>Шлем-модуль «Святотатство»:</strong> Дешифратор проводимости. Перехват управления автоматическими системами врага на дистанциях до 30 метров.",
+              "<strong>Профильный модуль «Квантовая вуаль»:</strong> Проектор фазового сдвига. Переход в астрал на 8 секунд (неуязвимость без возможности атаковать самостоятельно)."
+            ],
+            resources: [
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "4/4 ед." },
+              { name: "Реактивно-Кинетический Модуль (РКМ)", value: "2/2 ед. (импульсные ЭМИ-заряды)" },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "2/2 ед." }
+            ],
+            shadow_note: true
+          }
+        ]
+      },
+      spectrum: {
+        title: "Спектр",
+        description: "Контроль пространства, дальняя рекогносцировка и РЭБ",
+        color: "amber",
+        operatives: [
+          {
+            id: "spec_marks",
+            name: "Стрелок",
+            kgd: "КГД I",
+            os: "ОС «Заря»",
+            rosk: "Уровень 1",
+            power: 3,
+            ppkh: "Latt=2, Ldef=1",
+            latt: 2,
+            ldef: 1,
+            role: "Снайпер прикрытия, воздушный наблюдатель.",
+            behavior: "Занимает возвышенности средней дальности. Рассчитывает баллистику ветра и гравитации на расстоянии до 600 метров через визор «Баллистик-1». Запускает микро-дрон «Комар» прямо над собой для постоянного тепловизионного контроля подступов, исключая обходы Лазутчиков.",
+            synergy: "Прикрывает продвижение Полевого медика, отсекая врагов, пытающихся добить раненых.",
+            stats: { atk: 70, def: 35, mob: 50, vit: 40, spt: 75 },
+            equipment: [
+              "<strong>Шлем-модуль «Баллистик-1»:</strong> Автоматический баллистический вычислитель. Проецирует точку падения пули с учетом ветра и гравитации.",
+              "<strong>Профильный модуль «Ястреб»:</strong> Разведывательно-оптический комплекс. Включает высокократную оптику и микро-дрон «Комар» для кругового тепловизионного обзора."
+            ],
+            resources: [
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "4/4 ед." },
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "3/3 ед. (микро-лопасти дрона)" }
+            ]
+          },
+          {
+            id: "spec_sniper",
+            name: "Снайпер",
+            kgd: "КГД II",
+            os: "ОС «Вектор»",
+            rosk: "Уровень 2",
+            power: 4,
+            ppkh: "Latt=3, Ldef=1",
+            latt: 3,
+            ldef: 1,
+            role: "Охотник за головами, ликвидатор ключевых целей.",
+            behavior: "Выслеживает цели по тепловым отпечаткам обуви и пролитым тех-жидкостям через сенсоры системы «Следопыт». Оборудует скрытую лежку под преломляющей сетью «Хамелеон». При нахождении целей за укрытиями запускает управляемый дрон-камикадзе «Шмель» с кумулятивным зарядом С-4.",
+            synergy: "Работает в паре с Лазутчиком, который подсвечивает ему цели сквозь препятствия для точечного поражения.",
+            stats: { atk: 85, def: 30, mob: 55, vit: 45, spt: 80 },
+            equipment: [
+              "<strong>Шлем-модуль «Следопыт»:</strong> Физико-химический анализатор следов. Подсвечивает остаточное излучение, капли жидкостей и поврежденную флору.",
+              "<strong>Профильный модуль «Клеймо»:</strong> Многофункциональный стек: оптико-преломляющая сеть «Хамелеон» и дрон-камикадзе «Шмель» с зарядом пластичной взрывчатки."
+            ],
+            resources: [
+              { name: "Реактивно-Кинетический Модуль (РКМ)", value: "3/3 ед. (заряды С-4 для «Шмеля»)" },
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "4/4 ед." }
+            ]
+          },
+          {
+            id: "spec_hunter",
+            name: "Охотник",
+            kgd: "КГД III",
+            os: "ОС «Атлас»",
+            rosk: "Уровень 3",
+            power: 6,
+            ppkh: "Latt=4, Ldef=2",
+            latt: 4,
+            ldef: 2,
+            role: "Воздушное доминирование, радиоэлектронное подавление.",
+            behavior: "Развертывает вокруг своей снайперской позиции ПРО-турель «Заслон», которая выжигает подлетающие гранаты и мины. Ведет огонь, одновременно с этим силой мысли через шлем «Хаб» управляя тяжелым парящим дроном «Око». Дрон ведет непрерывное преследование помеченных в интерфейсе целей.",
+            synergy: "Оказывает мощную поддержку штурмовой группе класса Штурмовик, расчищая им путь от мин и подавляя защитные турели противника с воздуха.",
+            stats: { atk: 80, def: 60, mob: 60, vit: 60, spt: 90 },
+            equipment: [
+              "<strong>Шлем-модуль «Хаб»:</strong> Многоканальный помехоустойчивый передатчик, гарантирующий синхронизацию с несколькими дронами в условиях сильных РЭБ-помех.",
+              "<strong>Профильный модуль «Заслон»:</strong> ПРО-турель автоматического перехвата кинетических гранат/мин и парящая тяжелая снайперская платформа «Око»."
+            ],
+            resources: [
+              { name: "Инженерно-Ремонтный Комплект (ИРК)", value: "4/4 ед." },
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "4/4 ед." }
+            ]
+          },
+          {
+            id: "spec_reaper",
+            name: "Жнец",
+            kgd: "КГД IV",
+            os: "ОС «Квант»",
+            rosk: "Уровень 3",
+            power: 8,
+            ppkh: "Latt=5, Ldef=3",
+            latt: 5,
+            ldef: 3,
+            role: "Стратегическое уничтожение тяжелой техники и укреплений.",
+            behavior: "Действует как стационарная электромагнитная артиллерия. ИИ-ассистент «Омни» вычисляет уязвимости в титановых экзоскелетах и технике. Жнец ведет огонь из Гаусс-пушки, пробивая бетонные стены до 0.5 метра. При попытке пехоты сблизиться развертывает роботизированный мини-танк «Саранча» (Locust).",
+            synergy: "Требует обязательного позиционного прикрытия от Щитоносца или Полевого био-инженера, так как в момент подготовки выстрела Гаусс-системы Жнец неподвижен и уязвим.",
+            stats: { atk: 100, def: 65, mob: 20, vit: 75, spt: 85 },
+            equipment: [
+              "<strong>Шлем-модуль «Омни»:</strong> ИИ-вычислитель уязвимостей брони и структурных дефектов укреплений врага для оптимизации ведения огня.",
+              "<strong>Профильный модуль «Жатва»:</strong> Снайперская рельсовая пушка (Гаусс-система) электромагнитного типа и автономный четвероногий мини-танк «Саранча» (Locust) с кассетными ракетами."
+            ],
+            resources: [
+              { name: "Реактивно-Кинетический Модуль (РКМ)", value: "4/4 ед. (1 ед. = 2 снаряда Гаусса или 1 кассета)" },
+              { name: "Унифицированный Энерго-Блок (УЭБ)", value: "3/3 ед. (атомный картридж для систем ИИ)" }
+            ]
+          }
+        ]
+      }
+    };
+
+    // Global Active State
+    let activeBranch = "bio";
+    let activeOperativeId = "bio_med";
+
+    // Initialize Page
+    window.onload = function() {
+      // Set timestamp
+      updateTimestamp();
+      setInterval(updateTimestamp, 1000);
+
+      // Initialize accordion
+      initAccordion();
+
+      // Render default branch (Bio) & operative
+      renderBranchOperatives();
+      selectOperative("bio_med");
+
+      // Initialize mini hacking simulators
+      resetZaryaGame();
+      resetVectorGame();
+      resetAtlasGame();
+      initPPKHGame();
+
+      // Activate lucide icons
+      lucide.createIcons();
+    };
+
+    function updateTimestamp() {
+      const now = new Date();
+      const format = now.toTimeString().split(' ')[0];
+      document.getElementById('current-time').innerText = `TIMESTAMP: ${format}`;
+    }
+
+    // 1. Accordion logic
+    function initAccordion() {
+      const toggleBtn = document.getElementById('toggle-tac-btn');
+      const content = document.getElementById('tac-content');
+      const icon = document.getElementById('toggle-tac-icon');
+
+      toggleBtn.addEventListener('click', () => {
+        const isHidden = content.classList.contains('hidden');
+        if (isHidden) {
+          content.classList.remove('hidden');
+          icon.style.transform = 'rotate(180deg)';
+        } else {
+          content.classList.add('hidden');
+          icon.style.transform = 'rotate(0deg)';
+        }
+      });
+    }
+
+    // 2. Network Decryption Simulators Logic
+    let activeHackProtocol = "zarya";
+    function switchHackingProtocol(protocol) {
+      activeHackProtocol = protocol;
+      
+      // Toggle button active styles
+      document.querySelectorAll('.hack-tab-btn').forEach(btn => {
+        btn.classList.remove('border-cyan-500/20', 'bg-cyan-950/20', 'text-cyan-400', 'border-red-500/20', 'bg-red-950/20', 'text-red-400');
+        btn.classList.add('border-slate-800', 'bg-slate-900/30', 'text-slate-400');
+      });
+
+      const activeBtn = document.getElementById(`btn-${protocol}`);
+      activeBtn.classList.remove('border-slate-800', 'bg-slate-900/30', 'text-slate-400');
+      if (protocol === 'ppkh') {
+        activeBtn.classList.add('border-red-500/20', 'bg-red-950/20', 'text-red-400');
+      } else {
+        activeBtn.classList.add('border-cyan-500/20', 'bg-cyan-950/20', 'text-cyan-400');
+      }
+
+      // Toggle display areas
+      document.querySelectorAll('.hack-section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(`hack-${protocol}`).classList.remove('hidden');
+
+      // Update badge and title
+      const titleEl = document.getElementById('terminal-screen-title');
+      const badgeEl = document.getElementById('hack-status-badge');
+      
+      if (protocol === 'zarya') {
+        titleEl.innerText = "ИНТЕРФЕЙС ДЕШИФРАЦИИ: ОС «ЗАРЯ»";
+        badgeEl.className = "text-[10px] uppercase px-2 py-0.5 rounded font-bold bg-cyan-950/40 text-cyan-400";
+        badgeEl.innerText = "ПОДКЛЮЧЕНО";
+        resetZaryaGame();
+      } else if (protocol === 'vector') {
+        titleEl.innerText = "ИНТЕРФЕЙС ДЕШИФРАЦИИ: ОС «ВЕКТОР»";
+        badgeEl.className = "text-[10px] uppercase px-2 py-0.5 rounded font-bold bg-cyan-950/40 text-cyan-400";
+        badgeEl.innerText = "ИНЖЕНЕРНЫЙ ВХОД";
+        resetVectorGame();
+      } else if (protocol === 'atlas') {
+        titleEl.innerText = "ИНТЕРФЕЙС ДЕШИФРАЦИИ: ОС «АТЛАС / КВАНТ»";
+        badgeEl.className = "text-[10px] uppercase px-2 py-0.5 rounded font-bold bg-cyan-950/40 text-cyan-400";
+        badgeEl.innerText = "КВАНТОВЫЙ ДЕШИФРАТОР";
+        resetAtlasGame();
+      } else if (protocol === 'ppkh') {
+        titleEl.innerText = "КОНТР-ХАКИНГ: ПРОТОКОЛ ППКХ";
+        badgeEl.className = "text-[10px] uppercase px-2 py-0.5 rounded font-bold bg-red-950/40 text-red-400";
+        badgeEl.innerText = "БОЕВАЯ СЕССИЯ";
+        initPPKHGame();
+      }
+    }
+
+    // --- GAME 1: ZARYA GAMEPLAY (The Nim Game) ---
+    let zaryaStack = 15;
+    const zaryaMaxTake = 3;
+    let zaryaFeedbackEl = document.getElementById('zarya-feedback');
+
+    function resetZaryaGame() {
+      zaryaStack = 15 + Math.floor(Math.random() * 6); // Randomize start between 15 and 20
+      document.getElementById('zarya-stack-count').innerText = zaryaStack;
+      document.getElementById('zarya-max-m').innerText = zaryaMaxTake;
+      zaryaFeedbackEl.innerText = "Ваш ход. Снимите пакеты из стека безопасности.";
+      zaryaFeedbackEl.className = "text-xs text-cyan-400 mt-3 font-medium h-5";
+    }
+
+    function makeZaryaMove(take) {
+      if (zaryaStack <= 0) return;
+      if (take > zaryaStack) {
+        zaryaFeedbackEl.innerText = `Нельзя взять больше, чем осталось в стеке (${zaryaStack})!`;
+        zaryaFeedbackEl.className = "text-xs text-red-400 mt-3 font-medium h-5";
+        return;
+      }
+
+      zaryaStack -= take;
+      document.getElementById('zarya-stack-count').innerText = zaryaStack;
+
+      if (zaryaStack === 0) {
+        zaryaFeedbackEl.innerText = "ВЗЛОМ ЗАВЕРШЕН. СИД-КЛЮЧ ИЗВЛЕЧЕН ОПЕРАТИВНИКОМ! СТАТУС: УСПЕШНО.";
+        zaryaFeedbackEl.className = "text-xs text-emerald-400 mt-3 font-bold h-5";
+        return;
+      }
+
+      // AI Move
+      zaryaFeedbackEl.innerText = "ИИ терминала анализирует пакеты...";
+      zaryaFeedbackEl.className = "text-xs text-slate-400 mt-3 font-medium h-5";
+
+      setTimeout(() => {
+        // Optimal Nim Play logic: try to leave multiples of (m + 1), i.e., 4
+        let aiTake = zaryaStack % (zaryaMaxTake + 1);
+        if (aiTake === 0) {
+          aiTake = 1 + Math.floor(Math.random() * zaryaMaxTake); // Fallback to random if in losing state
+        }
+        aiTake = Math.min(aiTake, zaryaStack);
+
+        zaryaStack -= aiTake;
+        document.getElementById('zarya-stack-count').innerText = zaryaStack;
+
+        if (zaryaStack === 0) {
+          zaryaFeedbackEl.innerText = "СИСТЕМНЫЙ СБОЙ: ИИ извлек последний пакет. Доступ заблокирован!";
+          zaryaFeedbackEl.className = "text-xs text-red-400 mt-3 font-bold h-5";
+        } else {
+          zaryaFeedbackEl.innerText = `Защита терминала стёрла ${aiTake} пакетов. Ваш ход.`;
+          zaryaFeedbackEl.className = "text-xs text-cyan-400 mt-3 font-medium h-5";
+        }
+      }, 800);
+    }
+
+    // --- GAME 2: VECTOR GAMEPLAY (Chomp Game) ---
+    // p x q grid, trap is at bottom-left [0,0] (1,1 in rules).
+    const rows = 4;
+    const cols = 5;
+    let gridState = []; // 2D array of booleans. True = Intact, False = Destroyed
+    
+    function resetVectorGame() {
+      gridState = Array(rows).fill(null).map(() => Array(cols).fill(true));
+      renderVectorGrid();
+      document.getElementById('vector-feedback').innerText = "Ваш ход. Стирайте ячейки матрицы. Избегайте ячейки [1, 1].";
+      document.getElementById('vector-feedback').className = "text-amber-400 font-medium";
+    }
+
+    function renderVectorGrid() {
+      const container = document.getElementById('vector-grid');
+      container.innerHTML = "";
+      
+      // Render from top row (index 3) down to bottom row (index 0)
+      for (let r = rows - 1; r >= 0; r--) {
+        for (let c = 0; c < cols; c++) {
+          const button = document.createElement('button');
+          button.style.width = '38px';
+          button.style.height = '38px';
+          button.className = "rounded border text-[9px] font-bold transition-all relative flex items-center justify-center ";
+          
+          if (r === 0 && c === 0) {
+            // The Trap
+            button.className += "border-red-500 bg-red-950/40 text-red-400 glow-border-red";
+            button.innerText = "TRAP";
+          } else {
+            if (gridState[r][c]) {
+              button.className += "border-slate-800 bg-slate-900 hover:bg-cyan-950/30 hover:border-cyan-500 text-slate-400 hover:text-cyan-400";
+              button.innerText = `[${r+1},${c+1}]`;
+            } else {
+              button.className += "border-slate-950 bg-slate-950/60 text-slate-700 pointer-events-none";
+              button.innerText = "---";
+            }
+          }
+
+          button.onclick = () => makeVectorMove(r, c, 'player');
+          container.appendChild(button);
+        }
+      }
+    }
+
+    function makeVectorMove(targetR, targetC, turn) {
+      if (!gridState[targetR][targetC]) return;
+
+      // If choosing trap [0, 0]
+      if (targetR === 0 && targetC === 0) {
+        gridState[0][0] = false;
+        renderVectorGrid();
+        if (turn === 'player') {
+          document.getElementById('vector-feedback').innerText = "ФАТАЛЬНЫЙ СИСТЕМНЫЙ СБОЙ: Вы активировали ловушку терминала!";
+          document.getElementById('vector-feedback').className = "text-red-400 font-bold animate-pulse";
+        } else {
+          document.getElementById('vector-feedback').innerText = "ПОБЕДА: ИИ терминала был вынужден наступить на ловушку!";
+          document.getElementById('vector-feedback').className = "text-emerald-400 font-bold";
+        }
+        return;
+      }
+
+      // Rule: Chomp target cell and all cells above and/or right of it
+      // Cells with row >= targetR and col >= targetC are deleted
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          if (r >= targetR && c >= targetC) {
+            gridState[r][c] = false;
+          }
+        }
+      }
+
+      renderVectorGrid();
+
+      if (turn === 'player') {
+        document.getElementById('vector-feedback').innerText = "Защитный ИИ пересчитывает контуры...";
+        document.getElementById('vector-feedback').className = "text-slate-500 font-medium";
+        
+        setTimeout(() => {
+          makeVectorAIMove();
+        }, 800);
+      }
+    }
+
+    function makeVectorAIMove() {
+      // Very basic AI: look for a winning/reasonable move, or take a random remaining cell that isn't [0,0]
+      let validMoves = [];
+      for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+          if (gridState[r][c] && !(r === 0 && c === 0)) {
+            validMoves.push({ r, c });
+          }
+        }
+      }
+
+      if (validMoves.length === 0) {
+        // AI has to pick trap
+        makeVectorMove(0, 0, 'ai');
+      } else {
+        // Choose randomly among valid safe moves
+        const choice = validMoves[Math.floor(Math.random() * validMoves.length)];
+        makeVectorMove(choice.r, choice.c, 'ai');
+        document.getElementById('vector-feedback').innerText = `ИИ стёр сектор [${choice.r+1}, ${choice.c+1}]. Ваша очередь.`;
+        document.getElementById('vector-feedback').className = "text-cyan-400 font-medium";
+      }
+    }
+
+
+    // --- GAME 3: ATLAS / KVANT (Nim on 3 heaps) ---
+    let heapA = 3;
+    let heapB = 5;
+    let heapC = 7;
+
+    function resetAtlasGame() {
+      heapA = 3;
+      heapB = 5;
+      heapC = 7;
+      
+      updateAtlasUI();
+      document.getElementById('atlas-feedback').innerText = "Ваш ход. Выберите объем стирания из одного кластера.";
+      document.getElementById('atlas-feedback').className = "text-amber-400 font-medium";
+    }
+
+    function updateAtlasUI() {
+      document.getElementById('atlas-val-a').innerText = `${heapA} GB`;
+      document.getElementById('atlas-val-b').innerText = `${heapB} GB`;
+      document.getElementById('atlas-val-c').innerText = `${heapC} GB`;
+
+      const sliderA = document.getElementById('atlas-slider-a');
+      sliderA.max = heapA;
+      sliderA.value = heapA;
+
+      const sliderB = document.getElementById('atlas-slider-b');
+      sliderB.max = heapB;
+      sliderB.value = heapB;
+
+      const sliderC = document.getElementById('atlas-slider-c');
+      sliderC.max = heapC;
+      sliderC.value = heapC;
+    }
+
+    function updateAtlasSlider(heapKey) {
+      const slider = document.getElementById(`atlas-slider-${heapKey}`);
+      document.getElementById(`atlas-val-${heapKey}`).innerText = `${slider.value} GB`;
+    }
+
+    function applyAtlasMove(heapKey) {
+      const slider = document.getElementById(`atlas-slider-${heapKey}`);
+      const eraseVal = parseInt(slider.value);
+      const originalVal = heapKey === 'a' ? heapA : heapKey === 'b' ? heapB : heapC;
+
+      if (eraseVal <= 0 || eraseVal > originalVal) {
+        document.getElementById('atlas-feedback').innerText = "Некорректный выбор гигабайт!";
+        document.getElementById('atlas-feedback').className = "text-red-400 font-medium";
+        return;
+      }
+
+      const diff = originalVal - eraseVal; // we retain the remainder
+      if (heapKey === 'a') heapA = diff;
+      else if (heapKey === 'b') heapB = diff;
+      else if (heapKey === 'c') heapC = diff;
+
+      updateAtlasUI();
+
+      if (heapA === 0 && heapB === 0 && heapC === 0) {
+        document.getElementById('atlas-feedback').innerText = "ОШИБКА ДЕШИФРАЦИИ: Вы стёрли последние данные. Вы проиграли дуэль!";
+        document.getElementById('atlas-feedback').className = "text-red-400 font-bold";
+        return;
+      }
+
+      document.getElementById('atlas-feedback').innerText = "Дешифратор объекта проводит замену пакетов...";
+      document.getElementById('atlas-feedback').className = "text-slate-500 font-medium";
+
+      setTimeout(() => {
+        makeAtlasAIMove();
+      }, 800);
+    }
+
+    function makeAtlasAIMove() {
+      // Standard Nim Strategy using Nim-sum (A XOR B XOR C)
+      let nimSum = heapA ^ heapB ^ heapC;
+      let targetHeap = null;
+      let eraseAmount = 0;
+
+      if (nimSum !== 0) {
+        // Find a heap where we can reduce its size to (heap XOR nimSum)
+        if ((heapA ^ nimSum) < heapA) {
+          targetHeap = 'a';
+          eraseAmount = heapA - (heapA ^ nimSum);
+        } else if ((heapB ^ nimSum) < heapB) {
+          targetHeap = 'b';
+          eraseAmount = heapB - (heapB ^ nimSum);
+        } else if ((heapC ^ nimSum) < heapC) {
+          targetHeap = 'c';
+          eraseAmount = heapC - (heapC ^ nimSum);
+        }
+      }
+
+      // If no optimal winning move, take 1 from the largest heap
+      if (!targetHeap || eraseAmount === 0) {
+        const heaps = [{ k: 'a', v: heapA }, { k: 'b', v: heapB }, { k: 'c', v: heapC }];
+        heaps.sort((x, y) => y.v - x.v);
+        if (heaps[0].v > 0) {
+          targetHeap = heaps[0].k;
+          eraseAmount = 1;
+        }
+      }
+
+      // Apply AI Move
+      if (targetHeap === 'a') heapA -= eraseAmount;
+      else if (targetHeap === 'b') heapB -= eraseAmount;
+      else if (targetHeap === 'c') heapC -= eraseAmount;
+
+      updateAtlasUI();
+
+      if (heapA === 0 && heapB === 0 && heapC === 0) {
+        document.getElementById('atlas-feedback').innerText = "УСПЕХ: ИИ стёр последние данные! Доступ разблокирован.";
+        document.getElementById('atlas-feedback').className = "text-emerald-400 font-bold";
+      } else {
+        document.getElementById('atlas-feedback').innerText = `ИИ стёр ${eraseAmount} GB в Кластере ${targetHeap.toUpperCase()}. Ваш ход.`;
+        document.getElementById('atlas-feedback').className = "text-cyan-400 font-medium";
+      }
+    }
+
+
+    // --- GAME 4: DIRECT CONTR-HACKING (ППКХ SIMULATION) ---
+    let ppkhRound = 1;
+    let ppkhMaxRound = 3;
+    let ppkhLatt = 3;
+    let ppkhLdef = 2;
+    
+    let ppkhRingSize = 8;
+    let ppkhPlayerPos = 0;
+    let ppkhScannedSectors = [];
+
+    function initPPKHGame() {
+      ppkhRound = 1;
+      ppkhLatt = parseInt(document.getElementById('ppkh-latt').value);
+      ppkhLdef = parseInt(document.getElementById('ppkh-ldef').value);
+
+      // Formulas
+      ppkhRingSize = 2 * ppkhLatt + 2;
+      const sVal = Math.ceil(ppkhLdef / 2);
+
+      document.getElementById('ppkh-ring-size').innerText = ppkhRingSize;
+      document.getElementById('ppkh-stat-k').innerText = ppkhRingSize;
+      document.getElementById('ppkh-stat-n').innerText = ppkhLatt;
+      document.getElementById('ppkh-stat-s').innerText = sVal;
+
+      // Random player start position
+      ppkhPlayerPos = Math.floor(Math.random() * ppkhRingSize);
+
+      generatePPKHRingUI();
+      generatePPKHMoveOptions();
+      runPPKHRoundSetup();
+    }
+
+    function generatePPKHRingUI() {
+      const ringContainer = document.getElementById('ppkh-ring-container');
+      ringContainer.innerHTML = "";
+
+      for (let i = 0; i < ppkhRingSize; i++) {
+        const sec = document.createElement('div');
+        sec.id = `ppkh-sec-${i}`;
+        sec.className = "w-10 h-10 border text-xs font-mono font-bold flex flex-col items-center justify-center rounded relative transition-all ";
+        
+        // Inside indicators
+        sec.innerHTML = `<span class="text-slate-500 text-[9px]">${i}</span>`;
+        ringContainer.appendChild(sec);
+      }
+    }
+
+    function generatePPKHMoveOptions() {
+      const container = document.getElementById('ppkh-move-buttons');
+      container.innerHTML = "";
+
+      // Allow steps in both directions up to Latt
+      // Positive/Negative steps
+      let possibleSteps = [];
+      for (let i = 1; i <= ppkhLatt; i++) {
+        possibleSteps.push(-i);
+        possibleSteps.push(i);
+      }
+      possibleSteps.sort((x, y) => x - y);
+
+      possibleSteps.forEach(step => {
+        const btn = document.createElement('button');
+        btn.className = "bg-slate-800 hover:bg-red-950/40 hover:text-red-400 border border-slate-750 px-2 py-1 text-xs rounded font-bold text-slate-300 transition-all text-center flex-1";
+        btn.innerText = step > 0 ? `+${step}` : `${step}`;
+        btn.onclick = () => makePPKHMove(step);
+        container.appendChild(btn);
+      });
+    }
+
+    function runPPKHRoundSetup() {
+      document.getElementById('ppkh-round').innerText = ppkhRound;
+      document.getElementById('ppkh-current-pos').innerText = ppkhPlayerPos;
+
+      // Calculate Defender scanned sectors for this round
+      // Scanning capacity S = ceil(Ldef / 2)
+      const scanCount = Math.ceil(ppkhLdef / 2);
+      ppkhScannedSectors = [];
+
+      // AI Defender strategy: try to scan sectors near where it suspects player might be
+      // Or select randomly
+      while (ppkhScannedSectors.length < scanCount) {
+        let randSec = Math.floor(Math.random() * ppkhRingSize);
+        if (!ppkhScannedSectors.includes(randSec)) {
+          ppkhScannedSectors.push(randSec);
+        }
+      }
+
+      // Update ring styling
+      for (let i = 0; i < ppkhRingSize; i++) {
+        const el = document.getElementById(`ppkh-sec-${i}`);
+        if (!el) continue;
+
+        el.className = "w-10 h-10 border text-xs font-mono font-bold flex flex-col items-center justify-center rounded relative transition-all border-slate-800 bg-[#0d1222] text-slate-400";
+        el.querySelector('span').className = "text-slate-500 text-[9px]";
+
+        // If player location
+        if (i === ppkhPlayerPos) {
+          el.className = "w-10 h-10 border text-xs font-mono font-bold flex flex-col items-center justify-center rounded relative transition-all border-cyan-500 bg-cyan-950/40 text-cyan-400 glow-border-cyan";
+          el.querySelector('span').className = "text-cyan-300 text-[9px]";
+          
+          const label = document.createElement('div');
+          label.className = "absolute -top-1.5 px-1 bg-cyan-500 text-black text-[7px] rounded font-bold scale-90";
+          label.innerText = "АТК";
+          el.appendChild(label);
+        }
+
+        // If scanned by defender
+        if (ppkhScannedSectors.includes(i)) {
+          el.className += " ring-2 ring-red-500/50";
+          const label = document.createElement('div');
+          label.className = "absolute -bottom-1.5 px-1 bg-red-500 text-white text-[7px] rounded font-bold scale-90";
+          label.innerText = "СКАН";
+          el.appendChild(label);
+        }
+      }
+    }
+
+    function makePPKHMove(step) {
+      if (ppkhRound > ppkhMaxRound) return;
+
+      // Update Player position with cyclic ring behavior
+      let newPos = (ppkhPlayerPos + step) % ppkhRingSize;
+      if (newPos < 0) newPos += ppkhRingSize;
+
+      ppkhPlayerPos = newPos;
+
+      // Check collision
+      if (ppkhScannedSectors.includes(ppkhPlayerPos)) {
+        // Busted!
+        document.getElementById('ppkh-feedback').innerText = `ОБНАРУЖЕНИЕ НА СЕКТОРЕ ${ppkhPlayerPos}! Квантовый канал заблокирован. Вы проиграли дуэль.`;
+        document.getElementById('ppkh-feedback').className = "text-red-400 font-bold animate-pulse";
+        
+        // Repaint ring to show crash
+        const el = document.getElementById(`ppkh-sec-${ppkhPlayerPos}`);
+        if (el) el.className = "w-10 h-10 border text-xs font-mono font-bold flex flex-col items-center justify-center rounded relative transition-all border-red-500 bg-red-950 text-red-400 glow-border-red";
+        
+        ppkhRound = 99; // lock gameplay
+        return;
+      }
+
+      // Round transition
+      if (ppkhRound < ppkhMaxRound) {
+        ppkhRound++;
+        document.getElementById('ppkh-feedback').innerText = `Успешный переход в сектор ${ppkhPlayerPos}. Системы противника взломаны на ${(ppkhRound - 1) * 33}%. Переход к раунду ${ppkhRound}.`;
+        document.getElementById('ppkh-feedback').className = "text-emerald-400 font-medium";
+        runPPKHRoundSetup();
+      } else {
+        // Complete 3 rounds successfully
+        document.getElementById('ppkh-feedback').innerText = "ПОЛНЫЙ ВЗЛОМ СИСТЕМЫ: Все 3 раунда завершены без детекции. Цель компрометирована!";
+        document.getElementById('ppkh-feedback').className = "text-emerald-400 font-bold glow-text-cyan";
+        
+        // Visual indicator of victory on player block
+        const el = document.getElementById(`ppkh-sec-${ppkhPlayerPos}`);
+        if (el) el.className = "w-10 h-10 border text-xs font-mono font-bold flex flex-col items-center justify-center rounded relative transition-all border-emerald-500 bg-emerald-950 text-emerald-400";
+        
+        ppkhRound = 99; // lock
+      }
+    }
+
+
+    // 3. Branches and Operatives specifications
+    function selectBranch(branchKey) {
+      activeBranch = branchKey;
+
+      // Update Tab CSS styles
+      document.querySelectorAll('.branch-tab').forEach(btn => {
+        btn.className = "branch-tab py-4 px-3 rounded-lg border border-slate-800 bg-slate-900/30 text-slate-400 hover:border-slate-700 font-bold transition-all text-center flex flex-col items-center justify-center gap-1.5";
+      });
+
+      const activeBtn = document.getElementById(`branch-tab-${branchKey}`);
+      
+      let borderCol = "border-cyan-500 bg-cyan-950/20 text-cyan-400 glow-border-cyan";
+      if (branchKey === 'steel') borderCol = "border-slate-400 bg-slate-900/50 text-slate-200";
+      if (branchKey === 'shadow') borderCol = "border-emerald-500 bg-emerald-950/20 text-emerald-400 glow-border-emerald";
+      if (branchKey === 'spectrum') borderCol = "border-amber-500 bg-amber-950/20 text-amber-400";
+
+      activeBtn.className = `branch-tab py-4 px-3 rounded-lg border ${borderCol} font-bold transition-all text-center flex flex-col items-center justify-center gap-1.5`;
+
+      // Render vertical items
+      renderBranchOperatives();
+
+      // Auto-select first in branch
+      const firstOp = OPERATIVES_DB[branchKey].operatives[0];
+      selectOperative(firstOp.id);
+    }
+
+    function renderBranchOperatives() {
+      const container = document.getElementById('operatives-vertical-list');
+      container.innerHTML = "";
+
+      const branch = OPERATIVES_DB[activeBranch];
+      
+      // We will group by KGD tiers
+      const tiers = { "КГД I": [], "КГД II": [], "КГД III": [], "КГД IV": [] };
+      branch.operatives.forEach(op => {
+        if (tiers[op.kgd]) tiers[op.kgd].push(op);
+      });
+
+      for (const [tier, ops] of Object.entries(tiers)) {
+        if (ops.length === 0) continue;
+
+        const tierBlock = document.createElement('div');
+        tierBlock.className = "space-y-1.5";
+        
+        const tierTitle = document.createElement('div');
+        tierTitle.className = "text-[10px] text-slate-500 uppercase tracking-widest font-bold pl-1";
+        tierTitle.innerText = tier;
+        tierBlock.appendChild(tierTitle);
+
+        ops.forEach(op => {
+          const opBtn = document.createElement('button');
+          opBtn.id = `op-btn-${op.id}`;
+          opBtn.onclick = () => selectOperative(op.id);
+          
+          opBtn.className = "w-full text-left p-2.5 rounded border border-slate-800 hover:border-slate-700 bg-slate-900/20 hover:bg-slate-900/50 text-slate-300 transition-all flex justify-between items-center";
+          opBtn.innerHTML = `
+            <span class="text-xs font-bold font-mono tracking-wide">${op.name}</span>
+            <span class="text-[9px] text-slate-500 font-mono">${op.os}</span>
+          `;
+          tierBlock.appendChild(opBtn);
+        });
+
+        container.appendChild(tierBlock);
+      }
+    }
+
+    function selectOperative(opId) {
+      activeOperativeId = opId;
+      const op = OPERATIVES_DB[activeBranch].operatives.find(x => x.id === opId);
+      if (!op) return;
+
+      // Update active styling in left list
+      document.querySelectorAll('[id^="op-btn-"]').forEach(btn => {
+        btn.classList.remove('border-cyan-500/50', 'bg-cyan-950/20', 'text-cyan-400');
+        btn.classList.add('border-slate-800', 'bg-slate-900/20', 'text-slate-300');
+      });
+
+      const activeBtn = document.getElementById(`op-btn-${opId}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('border-slate-800', 'bg-slate-900/20', 'text-slate-300');
+        activeBtn.classList.add('border-cyan-500/50', 'bg-cyan-950/20', 'text-cyan-400');
+      }
+
+      // Populate Dossier Screen
+      document.getElementById('dossier-kgd').innerText = op.kgd;
+      document.getElementById('dossier-os').innerText = op.os;
+      document.getElementById('dossier-name').innerText = op.name;
+      document.getElementById('dossier-role').innerText = op.role;
+      document.getElementById('dossier-combat-behavior').innerText = op.behavior;
+      document.getElementById('dossier-synergy').innerText = op.synergy;
+
+      document.getElementById('dossier-rosk-level').innerText = op.rosk;
+      document.getElementById('dossier-net-power').innerText = op.power;
+      document.getElementById('dossier-ppkh-stats').innerText = op.ppkh;
+
+      // Toggle Steel/Shadow specific footnotes
+      const steelPassiveNote = document.getElementById('passive-he-note');
+      if (op.steel_passive) {
+        steelPassiveNote.classList.remove('hidden');
+      } else {
+        steelPassiveNote.classList.add('hidden');
+      }
+
+      // Equipment Render
+      const equipList = document.getElementById('dossier-equip-list');
+      equipList.innerHTML = "";
+      op.equipment.forEach(item => {
+        const li = document.createElement('li');
+        li.innerHTML = item;
+        equipList.appendChild(li);
+      });
+
+      // Resources Render
+      const resList = document.getElementById('dossier-resources-list');
+      resList.innerHTML = "";
+      op.resources.forEach(res => {
+        const row = document.createElement('div');
+        row.className = "flex justify-between";
+        row.innerHTML = `<span>${res.name}:</span> <span class="font-bold text-cyan-400">${res.value}</span>`;
+        resList.appendChild(row);
+      });
+
+      // Draw pure SVG Radar Chart based on operative metrics
+      drawRadarChart(op.stats);
+    }
+
+    // 4. Pure SVG Radar Chart Generator
+    function drawRadarChart(stats) {
+      const container = document.getElementById('radar-container');
+      
+      const width = 200;
+      const height = 200;
+      const cx = width / 2;
+      const cy = height / 2;
+      const radius = 70;
+
+      // Stats key sequence: Atk (Атака), Def (Защита), Mob (Мобильность), Vit (Живучесть), Spt (Поддержка)
+      const keys = ["atk", "def", "mob", "vit", "spt"];
+      const labels = ["АТАКА", "ЗАЩИТА", "МОБИЛЬНОСТЬ", "ЖИВУЧЕСТЬ", "ПОДДЕРЖКА"];
+      const points = [];
+
+      // Calculate polygon points
+      keys.forEach((key, index) => {
+        const value = stats[key] || 0;
+        const angle = (index * 2 * Math.PI / 5) - (Math.PI / 2); // Rotate to start from vertical top
+        const x = cx + radius * (value / 100) * Math.cos(angle);
+        const y = cy + radius * (value / 100) * Math.sin(angle);
+        points.push({ x, y, labelX: cx + (radius + 20) * Math.cos(angle), labelY: cy + (radius + 15) * Math.sin(angle), val: value });
+      });
+
+      // Create Web-grid rings
+      let ringsSvg = "";
+      for (let r = 25; r <= 100; r += 25) {
+        const ringPoints = [];
+        for (let i = 0; i < 5; i++) {
+          const angle = (i * 2 * Math.PI / 5) - (Math.PI / 2);
+          const rx = cx + radius * (r / 100) * Math.cos(angle);
+          const ry = cy + radius * (r / 100) * Math.sin(angle);
+          ringPoints.push(`${rx},${ry}`);
+        }
+        ringsSvg += `<polygon points="${ringPoints.join(' ')}" fill="none" stroke="#1e293b" stroke-width="1" />`;
+      }
+
+      // Draw axis lines
+      let axisSvg = "";
+      for (let i = 0; i < 5; i++) {
+        const angle = (i * 2 * Math.PI / 5) - (Math.PI / 2);
+        const rx = cx + radius * Math.cos(angle);
+        const ry = cy + radius * Math.sin(angle);
+        axisSvg += `<line x1="${cx}" y1="${cy}" x2="${rx}" y2="${ry}" stroke="#1e293b" stroke-width="1" />`;
+      }
+
+      // Render primary polygon points string
+      const polyPointsStr = points.map(p => `${p.x},${p.y}`).join(' ');
+
+      // Render Label texts
+      let labelsSvg = "";
+      points.forEach((p, index) => {
+        // Adjust alignment depending on side
+        let textAnchor = "middle";
+        if (p.labelX < cx - 10) textAnchor = "end";
+        if (p.labelX > cx + 10) textAnchor = "start";
+
+        labelsSvg += `
+          <text x="${p.labelX}" y="${p.labelY}" font-family="'JetBrains Mono'" font-size="8" fill="#94a3b8" text-anchor="${textAnchor}" font-weight="bold">
+            ${labels[index]} (${p.val})
+          </text>
+        `;
+      });
+
+      // Color themes depending on branch
+      let strokeColor = "#06b6d4";
+      let fillColor = "rgba(6, 182, 212, 0.25)";
+      if (activeBranch === 'steel') {
+        strokeColor = "#94a3b8";
+        fillColor = "rgba(148, 163, 184, 0.25)";
+      } else if (activeBranch === 'shadow') {
+        strokeColor = "#10b981";
+        fillColor = "rgba(16, 185, 129, 0.25)";
+      } else if (activeBranch === 'spectrum') {
+        strokeColor = "#f59e0b";
+        fillColor = "rgba(245, 158, 11, 0.25)";
+      }
+
+      const svgHtml = `
+        <svg width="100%" height="100%" viewBox="0 0 ${width} ${height}" class="overflow-visible">
+          <!-- Background Web Grid -->
+          ${ringsSvg}
+          ${axisSvg}
+          
+          <!-- Data Polygon Area -->
+          <polygon points="${polyPointsStr}" fill="${fillColor}" stroke="${strokeColor}" stroke-width="2" class="transition-all duration-300" />
+          
+          <!-- Small core dots -->
+          ${points.map(p => `<circle cx="${p.x}" cy="${p.y}" r="3" fill="${strokeColor}" />`).join('')}
+
+          <!-- Labels -->
+          ${labelsSvg}
+        </svg>
+      `;
+
+      container.innerHTML = svgHtml;
+    }
+  </script>
+</body>
+</html>
